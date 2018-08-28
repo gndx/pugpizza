@@ -1,0 +1,11 @@
+{
+  "name": "pugpizza",
+  "version": "1.0.0",
+  "description": "bot de messenger para nuestra pizzeria",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "oscar barajas <oscar.barajas@platzi.com>",
+  "license": "MIT"
+}
