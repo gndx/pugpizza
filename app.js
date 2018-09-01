@@ -42,7 +42,7 @@ function handleEvent(senderId, event){
 
 function handleMessage(senderId, event){
     if(event.text){
-        receipt(senderId);
+        defaultMessage(senderId);
     } else if (event.attachments) {
         handleAttachments(senderId, event)
     }
@@ -77,13 +77,35 @@ function handlePostback(senderId, payload){
     console.log(payload)
     switch (payload) {
         case "GET_STARTED_PUGPIZZA":
-            console.log(payload)
+            senderActions(senderId)
+            defaultMessage(senderId);
         break;
         case "PIZZAS_PAYLOAD":
+            senderActions(senderId)
             showPizzas(senderId);
         break;
         case "PEPPERONI_PAYLOAD":
+            senderActions(senderId)
             sizePizza(senderId);
+        break;
+        case "PERSONAL_SIZE_PAYLOAD":
+            senderActions(senderId)
+            getLocation(senderId);
+        break;
+        case "CONTACT_PAYLOAD":
+            senderActions(senderId);
+            contactSuppport(senderId);
+        break;
+        case "LOCATIONS_PAYLOAD":
+            senderActions(senderId);
+            showLocations(senderId);
+        break;
+        case "ABOUT_PAYLOAD":
+            senderActions(senderId);
+            messageImage(senderId);
+        break;
+        default:
+            defaultMessage(senderId);
         break;
     }
 }
@@ -110,9 +132,11 @@ function handleAttachments(senderId, event){
         case "audio":
             console.log(attachment_type);
         break;
-      case "file":
+        case "file":
             console.log(attachment_type);
         break;
+        case "location":
+            receipt(senderId);
       default:
             console.log(attachment_type);
         break;
@@ -371,6 +395,23 @@ function receipt(senderId) {
                     ]
                 }
             }
+        }
+    }
+    callSendApi(messageData);
+}
+
+function getLocation(senderId){
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "text": "Ahora ¿Puedes proporcionarnos tu ubicación?",
+            "quick_replies": [
+                {
+                    "content_type": "location"
+                }
+            ]
         }
     }
     callSendApi(messageData);
