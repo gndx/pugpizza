@@ -43,6 +43,8 @@ function handleEvent(senderId, event){
 function handleMessage(senderId, event){
     if(event.text){
         defaultMessage(senderId);
+    } else if (event.attachments) {
+        handleAttachments(senderId, event)
     }
 }
 
@@ -62,6 +64,27 @@ function handlePostback(senderId, payload){
     switch (payload) {
         case "GET_STARTED_PUGPIZZA":
             console.log(payload)
+        break;
+    }
+}
+
+function handleAttachments(senderId, event){
+    let attachment_type = event.attachments[0].type;
+    switch (attachment_type) {
+        case "image":
+            console.log(attachment_type);
+        break;
+        case "video": 
+            console.log(attachment_type);
+        break;
+        case "audio":
+            console.log(attachment_type);
+        break;
+      case "file":
+            console.log(attachment_type);
+        break;
+      default:
+            console.log(attachment_type);
         break;
     }
 }
