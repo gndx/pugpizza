@@ -42,7 +42,7 @@ function handleEvent(senderId, event){
 
 function handleMessage(senderId, event){
     if(event.text){
-        showLocations(senderId);
+        receipt(senderId);
     } else if (event.attachments) {
         handleAttachments(senderId, event)
     }
@@ -306,6 +306,67 @@ function sizePizza(senderId) {
                                     "payload": "MEDIUM_SIZE_PAYLOAD",
                                 }
                             ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    callSendApi(messageData);
+}
+
+function receipt(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "receipt",
+                    "recipient_name": "Oscar Barajas",
+                    "order_number": "123123",
+                    "currency": "MXN",
+                    "payment_method": "Efectivo",
+                    "order_url": "https://platzi.com/order/123",
+                    "timestamp": "123123123",
+                    "address": {
+                        "street_1": "Platzi HQ",
+                        "street_2": "---",
+                        "city": "Mexico",
+                        "postal_code": "543135",
+                        "state": "Mexico",
+                        "country": "Mexico"
+                    },
+                    "summary": {
+                        "subtotal": 12.00,
+                        "shipping_cost": 2.00,
+                        "total_tax": 1.00,
+                        "total_cost": 15.00
+                    },
+                    "adjustments": [
+                        {
+                            "name": "Descuento frecuent",
+                            "amount": 1.00
+                        }
+                    ],
+                    "elements": [
+                        {
+                            "title": "Pizza Pepperoni",
+                            "subtitle": "La mejor pizza de pepperoni",
+                            "quantity": 1,
+                            "price": 10,
+                            "currency": "MXN",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg"
+                        },
+                        {
+                            "title": "Bebida",
+                            "subtitle": "Jugo de Tamarindo",
+                            "quantity": 1,
+                            "price": 2,
+                            "currency": "MXN",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg"
                         }
                     ]
                 }
