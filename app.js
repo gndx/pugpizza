@@ -26,21 +26,31 @@ app.post('/webhook/', function(req, res){
     const webhook_event = req.body.entry[0];
     if(webhook_event.messaging) {
         webhook_event.messaging.forEach(event => {
-            handleMessage(event);
+            handleEvent(event.sender.id, event);
         });
     }
     res.sendStatus(200);
 });
 
-function handleMessage(event){
-    const senderId = event.sender.id;
-    const messageText = event.message.text;
+function handleEvent(senderId, event){
+    if(event.message){
+        handleMessage(senderId, event.message)
+    }
+}
+
+function handleMessage(senderId, event){
+    if(event.text){
+        defaultMessage(senderId);
+    }
+}
+
+function defaultMessage(senderId) {
     const messageData = {
-        recipient: {
-            id: senderId
+        "recipient": {
+            "id": senderId
         },
-        message: {
-            text: messageText
+        "message": {
+            "text": "Hola soy un bot de messenger y te invito a utilizar nuestro menu"
         }
     }
     callSendApi(messageData);
@@ -55,14 +65,14 @@ function callSendApi(response) {
         "method": "POST",
         "json": response
     },
-    function(err) {
-        if(err) {
-            console.log('Ha ocurrido un error')
-        } else {
-            console.log('Mensaje enviado')
+        function (err) {
+            if (err) {
+                console.log('Ha ocurrido un error')
+            } else {
+                console.log('Mensaje enviado')
+            }
         }
-    }
-)
+    )
 }
 
 app.listen(app.get('port'), function(){
