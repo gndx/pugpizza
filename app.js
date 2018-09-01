@@ -54,9 +54,22 @@ function defaultMessage(senderId) {
             "id": senderId
         },
         "message": {
-            "text": "Hola soy un bot de messenger y te invito a utilizar nuestro menu"
+            "text": "Hola soy un bot de messenger y te invito a utilizar nuestro menu",
+            "quick_replies": [
+                {
+                    "content_type": "text",
+                    "title": "¿Quieres una Pizza?",
+                    "payload": "PIZZAS_PAYLOAD"
+                },
+                {
+                    "content_type": "text",
+                    "title": "Acerca de",
+                    "payload": "ABOUT_PAYLOAD"
+                }
+            ]
         }
     }
+    senderActions(senderId)
     callSendApi(messageData);
 }
 
@@ -66,6 +79,16 @@ function handlePostback(senderId, payload){
             console.log(payload)
         break;
     }
+}
+
+function senderActions(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "sender_action": "typing_on"
+    }
+    callSendApi(messageData);
 }
 
 function handleAttachments(senderId, event){
