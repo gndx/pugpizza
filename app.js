@@ -74,9 +74,13 @@ function defaultMessage(senderId) {
 }
 
 function handlePostback(senderId, payload){
+    console.log(payload)
     switch (payload) {
         case "GET_STARTED_PUGPIZZA":
             console.log(payload)
+        break;
+        case "PIZZAS_PAYLOAD":
+            showPizzas(senderId);
         break;
     }
 }
@@ -130,6 +134,51 @@ function callSendApi(response) {
         }
     )
 }
+
+
+function showPizzas(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [
+                        {
+                            "title": "Peperoni",
+                            "subtitle": "Con todo el sabor del peperoni",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Elegir Pepperoni",
+                                    "payload": "PEPPERONI_PAYLOAD",
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Pollo BBQ",
+                            "subtitle": "Con todo el sabor del BBQ",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Elegir Pollo BBQ",
+                                    "payload": "BBQ_PAYLOAD",
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    callSendApi(messageData)
+}
+
 
 app.listen(app.get('port'), function(){
     console.log('Nuestro servidor esta funcionando con el barto en el puerto: ', app.get('port'));
