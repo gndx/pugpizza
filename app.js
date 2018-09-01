@@ -42,7 +42,7 @@ function handleEvent(senderId, event){
 
 function handleMessage(senderId, event){
     if(event.text){
-        defaultMessage(senderId);
+        showLocations(senderId);
     } else if (event.attachments) {
         handleAttachments(senderId, event)
     }
@@ -181,6 +181,95 @@ function showPizzas(senderId) {
     }
     callSendApi(messageData)
 }
+
+function messageImage(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "attachment": {
+                "type": "image",
+                "payload": {
+                    "url": "https://media.giphy.com/media/1dOIvm5ynwYolB2Xlh/giphy.gif"
+                }
+            }
+        }
+    }
+    callSendApi(messageData);
+}
+
+function contactSuppport(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "Hola este es el canal de soporte, ¿quieres llamarnos?",
+                    "buttons": [
+                        {
+                            "type": "phone_number",
+                            "title": "Llamar a un asesor",
+                            "payload": "+571231231231"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    callSendApi(messageData);
+}
+
+function showLocations(senderId) {
+    const messageData = {
+        "recipient": {
+            "id": senderId
+        },
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "top_element_style": "large",
+                    "elements": [
+                        {
+                            "title": "Sucursal Mexico",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg",
+                            "subtitle": "Direccion bonita #555",
+                            "buttons": [
+                                {
+                                    "title": "Ver en el mapa",
+                                    "type": "web_url",
+                                    "url": "https://goo.gl/maps/GCCpWmZep1t",
+                                    "webview_height_ratio": "full"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Sucursal Colombia",
+                            "image_url": "https://s3.amazonaws.com/chewiekie/img/productos-pizza-peperoni-champinones.jpg",
+                            "subtitle": "Direccion muy lejana #333",
+                            "buttons": [
+                                {
+                                    "title": "Ver en el mapa",
+                                    "type": "web_url",
+                                    "url": "https://goo.gl/maps/GCCpWmZep1t",
+                                    "webview_height_ratio": "tall"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    callSendApi(messageData);
+}
+
 
 function sizePizza(senderId) {
     const messageData = {
