@@ -4,7 +4,8 @@
   "description": "bot de messenger para nuestra pizzeria",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "oscar barajas <oscar.barajas@platzi.com>",
   "license": "MIT",
@@ -15,5 +16,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
+  },
+  "engines": {
+    "node": "8.9.1"
   }
 }
